@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class = "center">
+  <div class="app-container">
+    <div class = "centered-box">
       <div id="app">
         <div class="header">
           <div class="left">
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card task-list-container">
           <div class="card-inner">
             <h2>Todo</h2>
             <ul class="list">
@@ -302,8 +302,6 @@ button:disabled {
   margin-left: auto;
 }
 
-
-
 .circle-button {
   width: 40px;
   height: 40px;
@@ -327,5 +325,41 @@ button:disabled {
   content: '+'; /* Insert the plus sign content */
   font-size: 28px; /* Adjust the font size as needed */
   font-weight: bold; /* Add bold style */
+}
+
+.app-container {
+  background-color: #f2f2f2; /* Set your desired background color */
+  height: 100vh; /* Make the container take up the full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Hide any overflowing content */
+}
+
+.centered-box {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.task-list-container {
+  max-height: 400px; /* Set a maximum height for the task list container */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+/* Style for the scrollbar */
+.task-list-container::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.task-list-container::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded corners for the thumb */
+}
+
+.task-list-container::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa; /* Color of the scrollbar thumb on hover */
 }
 </style>
