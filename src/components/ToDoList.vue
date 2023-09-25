@@ -1,44 +1,46 @@
 <template>
-  <div class="app-container">
-    <div class = "centered-box">
-      <div id="app">
-        <div class="header">
-          <div class="left">
-            <h1>TODO APP</h1>
-          </div>
-          <div class="right">
-            <div class="task-buttons">
-              <button class="notification-button" disabled>
-                Tasks
-                <span class="notification-badge blue-badge">{{ totalTasks }}</span>
-              </button>
-              <button class="notification-button" disabled>
-                Done Tasks
-                <span class="notification-badge green-badge">{{ completedTasks }}</span>
-              </button>
-              <button @click="deleteAllTasks">
-                <i class="fas fa-trash"></i> TASK
-              </button>
+  <div class = "outer-container">
+    <div class= "inner-container">
+      <div class = "centered-box">
+        <div id="app">
+          <div class="header">
+            <div class="left">
+              <h1>TODO APP</h1>
+            </div>
+            <div class="right">
+              <div class="task-buttons">
+                <button class="notification-button" disabled>
+                  Tasks
+                  <span class="notification-badge blue-badge">{{ totalTasks }}</span>
+                </button>
+                <button class="notification-button" disabled>
+                  Done Tasks
+                  <span class="notification-badge green-badge">{{ completedTasks }}</span>
+                </button>
+                <button @click="deleteAllTasks" class="red-button">
+                  <i class="fas fa-trash"></i> TASK
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card task-list-container">
-          <div class="card-inner">
-            <h2>Todo</h2>
-            <ul class="list">
-              <li class="list-item" :class="{ completed: item.completed }" v-for="item in items" :key="item.id">
-                <div class="list-item-toggle" @click="toggleCompleted(item)"></div><span>{{ item.name }}</span>
-                <div class="list-item-delete" @click="removeItem(item)">X</div>
-              </li>
-            </ul>
+          <div class="card task-list-container">
+            <div class="card-inner">
+              <h2>Todo</h2>
+              <ul class="list">
+                <li class="list-item" :class="{ completed: item.completed }" v-for="item in reversedItems" :key="item.id">
+                  <div class="list-item-toggle" @click="toggleCompleted(item)"></div><span>{{ item.name }}</span>
+                  <div class="list-item-delete" @click="removeItem(item)">X</div>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="card">
-          <div class="flex">
-            <input v-model="newItem" @keyup.enter="addItem" placeholder="Add new todo" />
-            <button @click="addItem" :disabled="newItem.length === 0" class="circle-button">
-              <span class="plus-sign"></span>
-            </button>
+          <div class="card">
+            <div class="flex">
+              <input v-model="newItem" @keyup.enter="addItem" placeholder="New task" />
+              <button @click="addItem" :disabled="newItem.length === 0" class="circle-button">
+                <span class="plus-sign"></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -68,6 +70,8 @@ export default {
     const totalTasks = computed(() => items.value.length);
     const completedTasks = computed(() => items.value.filter(item => item.completed).length);
 
+    // Reverse the order of items to display from latest to oldest
+    const reversedItems = computed(() => [...items.value].reverse());
 
     const addItem = () => {
       if (newItem.value.trim() !== "") {
@@ -98,6 +102,7 @@ export default {
       items,
       totalTasks,
       completedTasks,
+      reversedItems,
       addItem,
       toggleCompleted,
       removeItem,
@@ -313,8 +318,8 @@ button:disabled {
   cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items: center; /* Center content vertically */
-  position: relative; /* Add position relative for pseudo-element */
+  align-items: center; 
+  position: relative; 
 }
 
 .circle-button:hover {
@@ -322,18 +327,18 @@ button:disabled {
 }
 
 .plus-sign::before {
-  content: '+'; /* Insert the plus sign content */
-  font-size: 28px; /* Adjust the font size as needed */
-  font-weight: bold; /* Add bold style */
+  content: '+'; 
+  font-size: 28px; 
+  font-weight: bold; 
 }
 
 .app-container {
-  background-color: #290a63; /* Set your desired background color */
-  height: 100vh; /* Make the container take up the full viewport height */
+  background-color: #290a63;
+  height: 100vh; 
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* Hide any overflowing content */
+  overflow: hidden; 
 }
 
 .centered-box {
@@ -345,21 +350,44 @@ button:disabled {
 }
 
 .task-list-container {
-  max-height: 400px; /* Set a maximum height for the task list container */
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  max-height: 400px; 
+  overflow-y: auto; 
 }
 
 /* Style for the scrollbar */
 .task-list-container::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 8px; 
 }
 
 .task-list-container::-webkit-scrollbar-thumb {
-  background-color: #ccc; /* Color of the scrollbar thumb */
-  border-radius: 4px; /* Rounded corners for the thumb */
+  background-color: #ccc; 
+  border-radius: 4px; 
 }
 
 .task-list-container::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa; /* Color of the scrollbar thumb on hover */
+  background-color: #aaa; 
 }
+.outer-container {
+  background-color: rgb(185, 215, 194);
+  height: 100vh; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; 
+}
+
+.inner-container {
+  background-color: white;
+  max-width: 800px; 
+  width: 100%;
+  padding: 20px; 
+  border-radius: 8px; 
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+}
+
+.red-button {
+  background-color: red;
+  color: white;
+}
+
 </style>
