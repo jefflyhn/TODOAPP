@@ -328,7 +328,7 @@ button:disabled {
 }
 
 .app-container {
-  background-color: #f2f2f2; /* Set your desired background color */
+  background-color: #290a63; /* Set your desired background color */
   height: 100vh; /* Make the container take up the full viewport height */
   display: flex;
   align-items: center;
